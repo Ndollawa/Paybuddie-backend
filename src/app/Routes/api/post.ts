@@ -24,9 +24,9 @@ router.route('/author/:author/').get((req, res, next) => PostHandler.showPostByA
 
 router.route('/:id/')
 .get((req, res, next) => PostHandler.show(req, res, next))
-.post(verifyJWT, verifyRoles(ROLES_LIST.ADMIN, ROLES_LIST.Editor, ROLES_LIST.Author), (req:Request, res:Response, next:NextFunction) => PostHandler.update(req, res))
-.put(verifyJWT, verifyRoles(ROLES_LIST.ADMIN, ROLES_LIST.Editor, ROLES_LIST.Author), (req:Request, res:Response, next:NextFunction) => PostHandler.update(req, res))
-.delete(verifyJWT, verifyRoles(ROLES_LIST.ADMIN, ROLES_LIST.Editor, ROLES_LIST.Author), (req:Request, res:Response, next:NextFunction) => PostHandler.delete(req, res))
+.post(verifyJWT, verifyRoles(ROLES_LIST.ADMIN), (req:Request, res:Response, next:NextFunction) => PostHandler.update(req, res))
+.put(verifyJWT, verifyRoles(ROLES_LIST.ADMIN), (req:Request, res:Response, next:NextFunction) => PostHandler.update(req, res))
+.delete(verifyJWT, verifyRoles(ROLES_LIST.ADMIN), (req:Request, res:Response, next:NextFunction) => PostHandler.delete(req, res))
 
 
 
