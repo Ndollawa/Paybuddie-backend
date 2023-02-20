@@ -64,7 +64,6 @@ public create = async (req:Request, res:Response) => {
 // @access Private
 public update = async (req:Request, res:Response) => {
     const { _id,type, data } = req.body
-    console.log(req.body)
 switch (type) {
     case 'passwordUpdate':
         const {password} = req.body
@@ -85,32 +84,6 @@ switch (type) {
    
 }
 
-// @desc Update a user
-// @route PATCH /users
-// @access Private
-public uploadUserImage = async (req:Request, res:Response) => {
-    const { _id,type, data } = req.body
-    console.log(req.files)
-    console.log(req.body)
-switch (type) {
-    case 'passwordUpdate':
-        const {password} = req.body
-        // Hash password 
-        const hashedPwd = await bcrypt.hash(password, 10) // salt rounds
-        await UserModel.findByIdAndUpdate(_id,{password:hashedPwd},{new:true})
-        res.status(200).json({message:'success'})   
-        break;
-    case 'profileUpdate':
-        await UserModel.findByIdAndUpdate(_id,data,{new:true})
-        res.status(200).json({message:'success'})
-        break;
-
-    default:
-        res.status(400).json({message:'Bad Request'})
-        break;
-}
-   
-}
 
 // @desc Delete a user
 // @route DELETE /users
@@ -146,6 +119,7 @@ public upload = async(req:Request, res:Response)=>{
     const {uploadType} = req.params
     const {_id} = req.body
     const file = req?.file!
+    // console.log(file)
     switch (uploadType) {
         case 'avatar':
             if(!file)return res.status(400).json({message:'No file uploded'})

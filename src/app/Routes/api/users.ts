@@ -18,7 +18,7 @@ router.route('/')
 
 
 router.route('/:id')
-.get((req, res, next) => UsersController.read(req, res, next))
+.get((req, res, next) => UsersController.read(req, res, next));
 // .post(verifyJWT, verifyRoles(ROLES_LIST.USER), (req:Request, res:Response, next:NextFunction) => PostHandler.update(req, res))
 // .put(verifyJWT, verifyRoles(ROLES_LIST.USER), (req:Request, res:Response, next:NextFunction) => PostHandler.update(req, res))
 // .delete(verifyJWT, verifyRoles(ROLES_LIST.USER), (req:Request, res:Response, next:NextFunction) => PostHandler.delete(req, res))
