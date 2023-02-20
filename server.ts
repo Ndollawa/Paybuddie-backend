@@ -114,6 +114,7 @@ app.use('/checkduplicate', CheckDuplicateRoutes);
 app.use('/auth',AuthRoutes);
 app.use('/sliders', SlidersRoutes);
 app.use('/users', UsersRoutes);
+app.use('/faqs', FaqsRoutes);
 
 // //post routes
 // app.use('/post', PostRoutes);
@@ -123,7 +124,6 @@ app.use('/users', UsersRoutes);
 app.use('/settings', SettingsRoutes);
 
 app.use(verifyJWT);
-app.use('/faqs', FaqsRoutes);
 app.use('/profile', ProfileRoutes);
 app.all('*',(req,res)=>{
     res.status(404).json({message: 'Resource not Found!'});
