@@ -3,18 +3,23 @@ import path from 'path';
 import multer from 'multer';
 import fs from 'fs';
 import multerFilter from '../../config/multerConfig';
+import {fileURLToPath} from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 const fsPromises = fs.promises
-const BASE_PATH = path.join( __dirname,"../../../","public/uploads");
+
+
+const useMulter =(uploadpath:string)=>{
+  const BASE_PATH = path.join( __dirname,"../../../","public/uploads");
 
 (async()=>{
     if(!fs.existsSync(BASE_PATH)){
    await fsPromises.mkdir(BASE_PATH,{recursive:true})
 }
 })()
-
-const useMulter =(uploadpath:string)=>{
-  const destination = path.join(BASE_PATH,uploadpath);
+const destination = path.join(BASE_PATH,uploadpath);
   
   (async()=>{
     if(!fs.existsSync(destination)){
