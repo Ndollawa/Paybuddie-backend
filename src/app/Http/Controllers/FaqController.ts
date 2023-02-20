@@ -21,7 +21,7 @@ class FaqController {
 // @access public
  public create = async (req:Request, res:Response) => {
     const { status, response, question } = req.body
-
+console.log(req.body)
     // Confirm data
     if (!status || !question || !response) {
         return res.status(400).json({ message: 'All fields are required' })
