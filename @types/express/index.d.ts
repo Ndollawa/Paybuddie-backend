@@ -7,7 +7,8 @@ declare global{
             user:string,
             email:string|string[],
             username:string,
-            path:string
+            path:string,
+            files: any
 
         }
         interface Response {

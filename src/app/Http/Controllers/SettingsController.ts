@@ -1,98 +1,119 @@
-import  SettingModel from '../../Models/Setting';
-import  bcrypt from 'bcrypt';
-import path from 'path';
-// import {fileURLToPath} from 'url';
+import  SettingsModel from '../../Models/Setting';
 import { Request, Response } from 'express';
-// require('dotenv').config()
-//  const __filename = fileURLToPath(import.meta.url);
+import BaseController from './BaseController';
 
-        // 
-        // const __dirname = path.dirname(__filename);
-class SettingsController{
+class SettingsController extends BaseController{
     constructor(){
-        this.index = this.index.bind(this);
+       super(SettingsModel)
        
 
    }
-index = async(req:Request, res:Response)=>{
 
-    try {
-    const result = await SettingModel.findOne() 
-    res.status(200).json({"settings":result});  
-    } catch (error) {
-        res.status(500).json({"error":error})
-    }
-
-}
-createSettings = async(req:Request, res:Response)=>{
-   const {data} = req.body;
-//  
-    try {
-    const result = await SettingModel.findOne() 
-    res.status(200).json({"settings":result});  
-    } catch (error) {
-        res.status(500).json({"error":error})
-    }
-
-}
-deleteSettings = async(req:Request, res:Response)=>{
-   const {data} = req.body;
-//  
-    try {
-    const result = await SettingModel.findOne() 
-    res.status(200).json({"settings":result});  
-    } catch (error) {
-        res.status(500).json({"error":error})
-    }
-
-}
 updateHomepageSettings = async(req:Request, res:Response)=>{
-   const {data} = req.body;
-    console.log(data)
-    try {
-    const result = await SettingModel.findOne() 
-    res.status(200).json({"settings":result});  
-    } catch (error) {
-        res.status(500).json({"error":error})
-    }
+   const {_id,data} = req.body;
+//    console.log(data)
+    const result = await SettingsModel.findOneAndUpdate({_id},{landingPageConfig:{...data}}) 
+    res.status(200).json({message:'success'});  
 
 }
 
 updateDashboardSettings = async(req:Request, res:Response)=>{
-    const{_id,Theme } =  req.body
-    console.log(Theme)
-    try {
-    const result = await SettingModel.findOne({_id})
-    result?.dashboardConfig?.layoutOptions = {...Theme}
-    result?.save()
-    // const result = await SettingModel.findOneAndUpdate({_id},{dashboardConfig:Theme}) 
-    res.status(200).json({"response":'success'});
-    } catch (error) {
-        res.status(500).json({"error":error})
-    }
+    const{_id,data} =  req.body
+   
+    // console.log(req.body)
+    const result = await SettingsModel.findOneAndUpdate({_id},{dashboardConfig:{layoutOptions:{...data}}}) 
+    res.status(200).json({message:'success'});
 
 }
-updatePagesSettings = async(req:Request, res:Response)=>{
-   const {data} = req.body;
-//  
-    try {
-    const result = await SettingModel.findOne() 
-    res.status(200).json({"settings":result});  
-    } catch (error) {
-        res.status(500).json({"error":error})
-    }
 
+updatePagesSettings = async(req:Request, res:Response)=>{
+   const {_id, data} = req.body;
+    const result = await SettingsModel.findOneAndUpdate({_id},{pages:{...data}}) 
+    res.status(200).json({message:'sucess'});  
 }
 updateGeneralSettings = async(req:Request, res:Response)=>{
-   const {data} = req.body;
-//  
-    try {
-    const result = await SettingModel.findOne() 
-    res.status(200).json({"settings":result});  
-    } catch (error) {
-        res.status(500).json({"error":error})
-    }
+   const {_id,data} = req.body;
+    const result = await SettingsModel.findOneAndUpdate({_id},{companyDetails:{...data}}) 
+    res.status(200).json({messsage:'success'});  
+ 
+}
 
+uploads = async(req:Request, res:Response)=>{
+    const uploadType = req.params.uploadType
+    // console.log(uploadType)
+    const {_id} = req.body
+    const file = req?.file!
+    if(file){
+        try {
+                    
+            const result = await SettingsModel.findOne({_id}).exec() 
+            switch (uploadType) {
+                case 'favicon':
+                    if(result){
+                    result.companyDetails!.favicon! = file.filename
+                    result?.save()
+                    res.status(200).json({messsage:'success'}); 
+                 }   
+                    break;
+                case 'logo':
+                    if(result){
+                    result.companyDetails!.logo! = file.filename
+                    result?.save()
+                    res.status(200).json({messsage:'success'}); 
+                 }   
+                    break;
+                case 'darklogo':
+                    if(result){
+                    result.companyDetails!.logoDark! = file.filename
+                    result?.save()
+                    res.status(200).json({messsage:'success'}); 
+                 }   
+                    break;
+                case 'pageBg':
+                    if(result){
+                    result.companyDetails!.pagesBg! = file.filename
+                    result?.save()
+                    res.status(200).json({messsage:'success'}); 
+                 }   
+                    break;
+                case 'bgImage':
+                    if(result){
+                    result.companyDetails!.backgroundImage! = file.filename
+                    result?.save()
+                    res.status(200).json({messsage:'success'}); 
+                 }   
+                    break;
+                case 'aboutUsBg':
+                    if(result){
+                    result.companyDetails!.aboutUsBg! = file.filename
+                    result?.save()
+                    res.status(200).json({messsage:'success'}); 
+                 }   
+                    break;
+            
+                default:
+                    return res.status(400).json({message:'Bad Request'})
+                    break;
+            }
+            // console.log(Object.keys(files))
+            // console.log(Object.values(files))
+            // console.log(files.upload)
+//             Object.keys(files['upload']).forEach((key:any)=>{
+//                 const {path,mimetype}= files['upload'][key]
+//    const img = fs.readFileSync(path)
+// const encode_img = img.toString('base64')
+    // console.log(encode_img)              
+// const finalImg = {
+//     ContentType:mimetype,
+//     image:Buffer.from(encode_img,'base64')
+// }     
+//     })   
+        } catch (error) {
+        //    next(error) 
+        console.log(error)
+        }
+
+}
 }
 
 

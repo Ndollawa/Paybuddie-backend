@@ -2,7 +2,7 @@ import mongoose, {ConnectOptions} from 'mongoose';
 
 type ConnectionOptionsExtend = {
     useNewUrlParser: boolean
-    useUnifiedTopology: boolean
+    useUnifiedTopology?: boolean
   }
   
   const options: ConnectOptions & ConnectionOptionsExtend = {

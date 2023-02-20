@@ -6,10 +6,25 @@ const Schema = mongoose.Schema;
 
 
 export interface userInterface{
-        first_name: string | undefined;
-        last_name: string | undefined;
+        _id:string | undefined;
+        firstName: string | undefined;
+        lastName: string | undefined;
         email: string;
         password: string;
+        username: string | undefined;
+        phone: string | undefined;
+        dob: string | undefined;
+        gender: string | undefined;
+        address: string | undefined;
+        city: string | undefined;
+        state: string | undefined;
+        country: string | undefined;
+        occupation: string | undefined;
+        bio: string | undefined;
+        userImage: string | undefined;
+        accountStatus:string | number;
+        verificationStatus: number | boolean;
+        accountSecurity_2FA: boolean | string;
         roles:  {
             User: number;
             Admin?: number | undefined;
@@ -17,17 +32,13 @@ export interface userInterface{
             Staff?: number | undefined;
         } ;
         refreshToken: string[];
-        username: string | undefined;
-        phone: string | undefined;
-        dob: string | undefined;
-        user_image: string | undefined;
 }
 // :userInterface 
 const UserSchema=  new Schema({
-    first_name:{
+    firstName:{
         type:String,
     },
-    last_name:{
+    lastName:{
         type:String,
     },
     email:{
@@ -48,6 +59,62 @@ const UserSchema=  new Schema({
     dob:{
         type:String
     },
+    gender:{
+         type:String,
+        enum: {
+            values: ['male', 'female'],
+            message: '{VALUE} is not supported'
+          },
+    },
+    address:{
+        type:String
+    },
+    city:{
+        type:String
+    },
+    state:{
+        type:String
+    },
+    country:{
+        type:String
+    },
+    occupation:{
+        type:String
+    },
+    bio:{
+        type:String
+    },
+    userImage:{
+        type:String
+    },
+    accountStatus:{
+         type:String,
+    enum: {
+        values: ['active', 'banned','disabled','deactivated','deleted'],
+        message: '{VALUE} is not supported'
+      },
+    default:'active',
+    required: true   
+    },
+      
+    verificationStatus:{
+         type:Boolean,
+    enum: {
+        values: [0,1],
+        message: '{VALUE} is not supported' 
+      },
+    default:0,
+    required: true   
+    },
+    accountSecurity_2FA:{
+        type:Number,
+        enum: {
+            values: [0, 1],
+            message: '{VALUE} is not supported'
+          },
+        default:0,
+        required: true   
+    },
     roles:{
         User:{ 
         type:Number,
@@ -55,9 +122,6 @@ const UserSchema=  new Schema({
         Admin:Number,
         Dev:Number,
         Staff:Number, 
-    },
-    user_image:{
-        type:String
     },
     refreshToken: [String]
 

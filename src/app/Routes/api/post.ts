@@ -3,7 +3,7 @@ const router = express.Router();
 import verifyJWT from '../../Http/Middleware/verifyJWT';
 // import path from 'path';
 import ROLES_LIST from '../../../config/roleList';
-import verifyRoles from '../../Http/Middleware/verifyRoles.js';
+import verifyRoles from '../../Http/Middleware/verifyRoles';
 
 // import PostController from '../../Http/Controllers/PostController';
 

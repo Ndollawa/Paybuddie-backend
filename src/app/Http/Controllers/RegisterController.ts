@@ -9,15 +9,7 @@ import { Request, Response } from 'express';
         // 
         // const __dirname = path.dirname(__filename);
 class RegisterController{
-    constructor(){
-        this.index = this.index.bind(this);
-       
-
-   }
-index = (req:Request, res:Response)=>{
-
-    // res.render(path.join(__dirname,'../','views','register.ejs'));
-}
+   
     // handles user registration
 register = async (req:Request, res:Response)=>{
     const {username, email, password} = req.body;
@@ -25,7 +17,7 @@ register = async (req:Request, res:Response)=>{
 
     //check for duplicate emails in the DB
     const duplicate = await UserModel.findOne({email}||{username}).exec();
-    if(duplicate)return res.sendStatus(409);// conflict
+    if(duplicate)return res.status(409).json({message:"Sorry a User with this details already exist!"});// conflict
     try{
 
         //encrypt password
@@ -42,24 +34,6 @@ register = async (req:Request, res:Response)=>{
     }catch(err:any){
         res.status(500).json({'message': err.message});
     }
-}
-
-
-checkDuplicate = async (req:Request, res: Response)=>{
-    const username = req?.body?.username;
-    const email = req?.body?.email ;
-   if(username) {
-    console.log(username)
-//check for duplicate username in the DB
-    const duplicate = await UserModel.findOne({username}).exec();
-    if(duplicate)return res.status(409).json({'message':  "taken"});// conflict
-   }else if(email){
-    //check for duplicate emails in the DB
-    const duplicate = await UserModel.findOne({email}).exec();
-    if(duplicate)return res.status(409).json({'message':  "taken"});// conflict
-   }
-        
-    
 }
 
 
