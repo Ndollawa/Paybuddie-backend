@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Backend",
   "main": "server.ts",
+  "type":"module",
   "scripts": {
     "start": "node ./build/server.js",
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
