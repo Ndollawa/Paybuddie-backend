@@ -1,6 +1,4 @@
-import dotenv from 'dotenv'
-dotenv.config(); 
-
+import dotenv from 'dotenv';
 import express, { Application } from "express";
 // import fileUpload from 'express-fileupload';
 import { Server,createServer } from "http"; 
@@ -31,6 +29,8 @@ import CheckDuplicateRoutes from './src/app/Http/Controllers/DuplicateController
 import { Seed } from './src/app/Seeders/Seeder';
 
 
+
+dotenv.config(); 
 
 // connect to Database
 connectDB();
